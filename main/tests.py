@@ -75,7 +75,7 @@ class Test(APITestCase):
         response = self.client.post('/reservations', data, format='json')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.data['date error'], ["Check-In date must not be a date before Check-Out date."])
+        self.assertEqual(response.data['date error'], ["Check-In date must be a date before Check-Out date."])
             
         
 

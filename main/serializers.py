@@ -13,7 +13,7 @@ class ReservationSerializer(serializers.ModelSerializer):
     
     def validate(self, data):
         if data['check_in'] > data['check_out']:
-             raise serializers.ValidationError({'date error':'Check-In date must not be a date before Check-Out date.'})
+             raise serializers.ValidationError({'date error':'Check-In date must be a date before Check-Out date.'})
         return data
     
     def to_representation(self, instance):
