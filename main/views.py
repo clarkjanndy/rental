@@ -4,6 +4,8 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIV
 from main.models import Rental, Reservation
 from main.serializers import RentalSerializer, ReservationSerializer
 
+from rest_framework.response import Response
+from django.db.models import F
 # Create your views here.
 class RentalListCreate(ListCreateAPIView):
     queryset = Rental.objects.all()
