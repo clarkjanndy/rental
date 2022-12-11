@@ -7,6 +7,7 @@ class RentalSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class ReservationSerializer(serializers.ModelSerializer):
+    rental_name = serializers.CharField()
     class Meta:
         model = Reservation
         fields = ('rental_name','id','check_in', 'check_out', 'previous_reservation')

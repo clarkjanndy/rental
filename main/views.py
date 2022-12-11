@@ -22,7 +22,7 @@ class ReservationListCreate(ListCreateAPIView):
     serializer_class = ReservationSerializer
     
     def list(self, request):
-        queryset = Reservation.objects.select_related('rental')
+        queryset = Reservation.objects.select_related('rental').annotate(rental_name=F('rental__name'))
         serializer = self.serializer_class(queryset, many=True)
         
         return Response(serializer.data)
