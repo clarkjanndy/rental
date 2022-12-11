@@ -26,9 +26,14 @@ class ReservationListCreate(ListCreateAPIView):
         serializer = self.serializer_class(queryset, many=True)
         
         return Response(serializer.data)
-        
-        
+                
 class ReservationRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
+    
+    def get(self, request, id):
+        queryset = Reservation.objects.select_related('rental').filter(id=id).annotate(rental_name=F('rental__name'))
+        serializer = self.serializer_class(queryset, many=True)
+        
+        return Response(serializer.data[0])

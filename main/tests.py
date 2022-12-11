@@ -67,18 +67,6 @@ class Test(APITestCase):
         self.assertEqual(response.data['check_out'], '2022-01-20')
         self.assertEqual(response.data['previous_reservation'], 4)
 
-    def test_6(self):
-        '''
-        Test to check if the error message is displayed.
-        '''
-        data = {"rental": 1, "check_in": '2022-01-20', "check_out": '2022-01-11'}
-        response = self.client.post('/reservations', data, format='json')
-
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.data['date error'], ["Check-In date must be a date before Check-Out date."])
-            
-        
-
     
     
         
