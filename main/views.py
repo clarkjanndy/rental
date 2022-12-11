@@ -5,6 +5,7 @@ from main.models import Rental, Reservation
 from main.serializers import RentalSerializer, ReservationSerializer
 
 from rest_framework.response import Response
+from django.http import HttpResponse
 from django.db.models import F
 # Create your views here.
 class RentalListCreate(ListCreateAPIView):
@@ -19,7 +20,14 @@ class RentalRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 class ReservationListCreate(ListCreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
-
+    
+    def list(self, request):
+        queryset = Reservation.objects.select_related('rental')
+        serializer = self.serializer_class(queryset, many=True)
+        
+        return Response(serializer.data)
+        
+        
 class ReservationRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     queryset = Reservation.objects.all()
