@@ -7,10 +7,16 @@ class RentalSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class ReservationSerializer(serializers.ModelSerializer):
-    rental_name = serializers.CharField()
+    rental_name = serializers.CharField(read_only=True)    
     class Meta:
         model = Reservation
-        fields = ('rental_name','id','check_in', 'check_out', 'previous_reservation')
+        fields = ('rental', 'rental_name','id','check_in', 'check_out', 'previous_reservation')
+        
+        read_only_fields = ['rental_name', ]
+        extra_kwargs = {
+            'rental': {'write_only': True},
+            'previous_reservation': {'read_only': True},
+        }
     
     def validate(self, data):
         if data['check_in'] > data['check_out']:
